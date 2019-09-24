@@ -36,6 +36,6 @@ class CurrencyCode implements Rule
      */
     public function message()
     {
-        return 'Invalid currency code.';
+        return __('validation.invalid_currency_code');
     }
 }

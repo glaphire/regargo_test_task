@@ -118,7 +118,8 @@ return [
     'uuid' => 'The :attribute must be a valid UUID.',
 
     //Custom messages
-    'wrong_control_number' => 'Invalid :attribute last number',
+    'wrong_control_number' => 'Invalid :attribute last number.',
+    'invalid_currency_code' => 'Invalid currency code.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

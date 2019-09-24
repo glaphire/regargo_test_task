@@ -8,6 +8,7 @@ use App\Rules\CurrencyCode;
 use App\Rules\OgrnFormula;
 use App\Services\CbrCurrencyService;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Exception;
 
 class OgrnController extends Controller
 {

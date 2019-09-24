@@ -12,6 +12,7 @@
         <label for="usd_currency">Текущий курс доллара, $:</label>
         <input type="text" name="usd_currency" placeholder="Доллар на сегодня" readonly>
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <div class="error-messages"></div>
     </form>
 @endsection
 @section('bottom-scripts')
@@ -28,8 +29,15 @@
                         success: function(response) {
                             $("input[name=usd_currency]").val(response.currency);
                         },
-                        error: function () {
-                            alert("Сервер не смог получить данные о валюте.");
+                        error: function (response) {
+                            if(response.responseJSON.hasOwnProperty('errors')) {
+                                $.each(response.responseJSON.errors, function(key, messages) {
+                                    messagesJoined = messages.join("<br/>");
+                                    $('.error-messages').html(messagesJoined).text();
+                                });
+                            } else {
+                                $('.error-messages').html("Ошибка сервера").text();
+                            }
                         }
                     });
                 },

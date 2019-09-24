@@ -36,7 +36,6 @@
                 },
                 error: function (response) {
                     $('.response-status').html("&#10008; некорректен").text();
-                    console.log((response.responseJSON.errors));
                     $.each(response.responseJSON.errors, function(key, messages) {
                         messagesJoined = messages.join("<br/>");
                         $('.error-messages').html(messagesJoined).text();

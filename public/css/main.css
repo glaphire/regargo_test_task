@@ -16,4 +16,5 @@ span {
 }
 .error-messages{
     margin-left: 10px;
+    color: red;
 }
