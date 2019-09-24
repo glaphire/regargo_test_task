@@ -13,3 +13,5 @@
 
 Route::get('/', 'OgrnController@showValidationForm');
 Route::post('/ogrn/validate', 'OgrnController@validateOgrn');
+Route::get('/ogrn/show-currency-form', 'OgrnController@showCurrencyForm');
+Route::get('/ogrn/get-currency-by-date', 'OgrnController@getCurrencyByDate');

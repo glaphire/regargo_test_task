@@ -30,4 +30,21 @@ class OgrnController extends Controller
 
         return response()->json(['is_correct' => false], 422);
     }
+
+    public function showCurrencyForm(Request $request)
+    {
+        return view('ogrn.currency_form', [
+            'ogrn_number' => $request->input('ogrn_number'),
+        ]);
+    }
+
+    public function getCurrencyByDate(Request $request)
+    {
+        $currency = $request->get('currency');
+        $date = $request->get('date');
+
+        return response()->json(['currency' => $currency, 'date' => $date]);
+
+
+    }
 }
