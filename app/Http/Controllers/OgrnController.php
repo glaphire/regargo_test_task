@@ -18,7 +18,7 @@ class OgrnController extends Controller
 
     public function validateOgrn(Request $request)
     {
-        $validationResult = $request->validate([
+        $request->validate([
             'ogrn_number' => [
                 'required', 'numeric', 'digits:13', new OgrnFormula()
             ]
