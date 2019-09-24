@@ -4,7 +4,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Rules\CurrencyCode;
 use App\Rules\OgrnFormula;
+use App\Services\CbrCurrencyService;
 use Illuminate\Http\Request;
 
 class OgrnController extends Controller
@@ -38,13 +40,26 @@ class OgrnController extends Controller
         ]);
     }
 
-    public function getCurrencyByDate(Request $request)
+    public function getCurrencyByDate(Request $request, CbrCurrencyService $cbrService)
     {
         $currency = $request->get('currency');
         $date = $request->get('date');
 
-        return response()->json(['currency' => $currency, 'date' => $date]);
+        $request->validate([
+            'currency' => ['required', 'string', new CurrencyCode()],
+            'date' => ['required', 'string', 'date_format:d/m/Y']
+            ]);
 
+        try {
+            $currencyValue = $cbrService->getCurrencyValueByDate($currency, $date);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unexpected response from third party server'], 500);
+        }
 
+        if ($currencyValue) {
+            return response()->json(['currency' => $currencyValue]);
+        } else {
+            return response()->json(['error' => 'Couldn\'t get currency value'], 500);
+        }
     }
 }
