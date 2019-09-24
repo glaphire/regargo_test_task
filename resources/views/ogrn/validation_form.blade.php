@@ -4,6 +4,7 @@
         <label for="ogrn_number">ОГРН:</label>
         <input type="text" name="ogrn_number" value="" placeholder="Введите ОГРН">
         <span class="response-status"></span>
+        <div class="error-messages"></div>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <input name="validate" id="validate" type="button" value="Проверить">
         <input name="search" id="search" type="button" value="Найти" disabled="true">
@@ -33,8 +34,14 @@
                     $('#search').prop('disabled', false);
                     return true;
                 },
-                error: function () {
+                error: function (response) {
                     $('.response-status').html("&#10008; некорректен").text();
+                    console.log((response.responseJSON.errors));
+                    $.each(response.responseJSON.errors, function(key, messages) {
+                        messagesJoined = messages.join("<br/>");
+                        $('.error-messages').html(messagesJoined).text();
+
+                    });
                     $('#search').prop('disabled', true);
                     return false;
                 }
