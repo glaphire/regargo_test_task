@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Rules\OrgnFormula;
+use App\Rules\OgrnFormula;
 use Illuminate\Http\Request;
 
 class OgrnController extends Controller
@@ -18,7 +18,7 @@ class OgrnController extends Controller
     {
         $validationResult = $request->validate([
             'ogrn_number' => [
-                'required', 'numeric', 'digits:13', new OrgnFormula()
+                'required', 'numeric', 'digits:13', new OgrnFormula()
             ]
         ]);
 
