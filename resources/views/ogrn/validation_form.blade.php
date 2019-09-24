@@ -6,14 +6,22 @@
         <span class="response-status"></span>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <input name="validate" id="validate" type="button" value="Проверить">
-        <input name="search" id="search" type="button" value="Найти">
+        <input name="search" id="search" type="button" value="Найти" disabled="true">
     </form>
     @endsection
     @section('bottom-scripts')
     <script type="text/javascript">
-        $('#validate').on('click', function(e) {
-            e.preventDefault();
+        $('#validate').on('click', function() {
             var ogrn_number = $("input[name=ogrn_number]").val();
+            validateOgrn(ogrn_number);
+        });
+
+        $('#search').on('click', function() {
+            var ogrn_number = $("input[name=ogrn_number]").val();
+            window.location = '/ogrn/show-currency-form?ogrn_number=' + ogrn_number;
+        });
+
+        function validateOgrn(ogrn_number) {
             $.ajax({
                 type: "POST",
                 url: '/ogrn/validate',
@@ -22,16 +30,15 @@
                 success: function()
                 {
                     $('.response-status').html("&#10004; корректен").text();
+                    $('#search').prop('disabled', false);
+                    return true;
                 },
                 error: function () {
                     $('.response-status').html("&#10008; некорректен").text();
+                    $('#search').prop('disabled', true);
+                    return false;
                 }
             });
-        });
-
-        $('#search').on('click', function(e) {
-            var ogrn_number = $("input[name=ogrn_number]").val();
-            window.location = '/ogrn/show-currency-form?ogrn_number=' + ogrn_number;
-        });
+        }
     </script>
 @endsection
