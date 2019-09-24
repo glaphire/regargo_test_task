@@ -24,13 +24,7 @@ class OgrnController extends Controller
             ]
         ]);
 
-        if ($validationResult) {
-            return response()->json([
-                'is_correct' => true,
-            ]);
-        }
-
-        return response()->json(['is_correct' => false], 422);
+        return response()->json(['is_correct' => true]);
     }
 
     public function showCurrencyForm(Request $request)
