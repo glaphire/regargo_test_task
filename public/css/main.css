@@ -1,0 +1,16 @@
+label {
+    display: block;
+    margin: 10px;
+}
+
+input {
+    display:block;
+    margin: 10px;
+}
+button {
+    display:block;
+    margin: 10px;
+}
+span {
+    margin-left: 10px;
+}
