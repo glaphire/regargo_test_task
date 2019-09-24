@@ -29,7 +29,7 @@
 
         $('.search').on('click', function(e) {
             var ogrn_number = $("input[name=ogrn_number]").val();
-            window.location = '/show-currency-form?ogrn_number=' + ogrn_number;
+            window.location = '/ogrn/show-currency-form?ogrn_number=' + ogrn_number;
         });
     </script>
 @endsection
