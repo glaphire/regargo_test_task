@@ -4,8 +4,12 @@
 @endsection
 @section('main-content')
     <form id="ogrn-currency-form">
+        <span>Выберите дату для отображения курса доллара:</span>
+        <label for="ogrn_number">ОГРН:</label>
         <input type="text" name="ogrn_number" value="{{ $ogrn_number }}" readonly>
+        <label for="date">Дата курса валют:</label>
         <input type="text" name="date" id="datepicker" placeholder="Выберите дату">
+        <label for="usd_currency">Текущий курс доллара, $:</label>
         <input type="text" name="usd_currency" placeholder="Доллар на сегодня" readonly>
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </form>
