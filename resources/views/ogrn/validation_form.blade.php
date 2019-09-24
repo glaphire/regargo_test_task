@@ -36,11 +36,14 @@
                 },
                 error: function (response) {
                     $('.response-status').html("&#10008; некорректен").text();
-                    $.each(response.responseJSON.errors, function(key, messages) {
-                        messagesJoined = messages.join("<br/>");
-                        $('.error-messages').html(messagesJoined).text();
-
-                    });
+                    if(response.responseJSON.hasOwnProperty('errors')) {
+                        $.each(response.responseJSON.errors, function(key, messages) {
+                            messagesJoined = messages.join("<br/>");
+                            $('.error-messages').html(messagesJoined).text();
+                        });
+                    } else {
+                        $('.error-messages').html("Ошибка сервера").text();
+                    }
                     $('#search').prop('disabled', true);
                     return false;
                 }
