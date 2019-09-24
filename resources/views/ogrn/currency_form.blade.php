@@ -22,14 +22,15 @@
                         url: url,
                         dataType: 'json',
                         success: function(response) {
-                            console.log(response);
+                            $("input[name=usd_currency]").val(response.currency);
                         },
-                        error: function (response) {
-                            console.log(response);
+                        error: function () {
+                            alert("Сервер не смог получить данные о валюте.");
                         }
                     });
                 },
                 startDate: '01/01/2010',
+                dateFormat: 'dd/mm/yy',
                 firstDay: 1
             });
         } );
