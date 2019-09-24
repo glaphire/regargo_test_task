@@ -11,4 +11,5 @@
 |
 */
 
-Route::get('/', 'OgrnController@validateOgrn');
+Route::get('/', 'OgrnController@showValidationForm');
+Route::post('/ogrn/validate', 'OgrnController@validateOgrn');
