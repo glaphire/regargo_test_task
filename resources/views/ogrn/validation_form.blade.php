@@ -1,46 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form id="orgn-validation-form">
+@extends('ogrn.page_layout')
+    @section('main-content')
+    <form id="ogrn-validation-form">
         <input type="text" name="ogrn_number" value="" placeholder="Введите ОГРН">
         <span class="response-status"></span>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <input type="submit" value="Проверить">
+        <input class="search" type="button" value="Найти">
     </form>
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous">
-    </script>
+    @endsection
+    @section('bottom-scripts')
     <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#orgn-validation-form').submit(function(e) {
+        $('#ogrn-validation-form').submit(function(e) {
             e.preventDefault();
             $.ajax({
                 type: "POST",
                 url: '/ogrn/validate',
                 dataType: 'json',
                 data: $(this).serialize(),
-                success: function(response)
+                success: function()
                 {
                     $('.response-status').html("&#10004; корректен").text();
                 },
-                error: function (response) {
+                error: function () {
                     $('.response-status').html("&#10008; некорректен").text();
                 }
             });
         });
+
+        $('.search').on('click', function(e) {
+            var ogrn_number = $("input[name=ogrn_number]").val();
+            window.location = '/show-currency-form?ogrn_number=' + ogrn_number;
+        });
     </script>
-</body>
-</html>
+@endsection
