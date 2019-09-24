@@ -37,7 +37,7 @@ class OgrnFormula implements Rule
      */
     public function message()
     {
-        return 'Invalid OGRN last number.';
+        return __('validation.wrong_control_number');
     }
 
     /**
