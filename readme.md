@@ -17,7 +17,8 @@
 
 Установка:
 
-```git clone git@github.com:glaphire/regargo_test_task.git
+```
+git clone git@github.com:glaphire/regargo_test_task.git
 cd regargo_test_task
 composer install
 cp .env.example .env
