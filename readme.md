@@ -13,3 +13,15 @@
 Второе поле предназначено для ввода-выбора даты.
 Третье поле отображает курс (например USD) 
 на указанную дату (по api Центробанка https://www.cbr.ru/development/).
+
+
+Установка:
+
+```git clone git@github.com:glaphire/regargo_test_task.git
+cd regargo_test_task
+composer install
+cp .env.example .env
+php artisan key:generate
+cd public
+php -S localhost:5000
+```
