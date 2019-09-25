@@ -2,19 +2,21 @@
 
 namespace App\Rules;
 
-use App\Services\CbrCurrencyService;
+use App\Services\CurrencyServiceInterface;
 use Illuminate\Contracts\Validation\Rule;
 
 class CurrencyCode implements Rule
 {
+    private $currencyService;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CurrencyServiceInterface $currencyService)
     {
-        //
+        $this->currencyService = $currencyService;
     }
 
     /**
@@ -26,7 +28,7 @@ class CurrencyCode implements Rule
      */
     public function passes($attribute, $value)
     {
-        return array_key_exists($value, CbrCurrencyService::$currenciesIds);
+        return in_array($value, $this->currencyService->getCurrencyCodes());
     }
 
     /**

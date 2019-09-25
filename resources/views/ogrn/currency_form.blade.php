@@ -9,8 +9,15 @@
         <input type="text" name="ogrn_number" value="{{ $ogrn_number }}" readonly>
         <label for="date">Дата курса валют:</label>
         <input type="text" name="date" id="datepicker" placeholder="Выберите дату">
-        <label for="usd_currency">Текущий курс доллара, $:</label>
-        <input type="text" name="usd_currency" placeholder="Доллар на сегодня" readonly>
+        <label for="currency_code"></label>
+        <select id="currency_codes">
+            <option disabled>Выберите валюту</option>
+            @foreach($currency_codes as $code)
+            <option value="{{$code}}">{{$code}}</option>
+            @endforeach
+        </select>
+        <label for="currency_value">Текущий курс:</label>
+        <input type="text" name="currency_value" placeholder="Валюта на сегодня" readonly>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <div class="error-messages"></div>
     </form>
@@ -21,13 +28,14 @@
         $( function() {
             $("#datepicker").datepicker( {
                 onSelect: function(date) {
-                    var url = '/ogrn/get-currency-by-date?date=' + date + '&currency=usd';
+                    var currency_code = $("#currency_codes option:selected").text();
+                    var url = '/ogrn/get-currency-by-date?date=' + date + '&currency=' + currency_code;
                     $.ajax({
                         type: "GET",
                         url: url,
                         dataType: 'json',
                         success: function(response) {
-                            $("input[name=usd_currency]").val(response.currency);
+                            $("input[name=currency_value]").val(response.currency);
                         },
                         error: function (response) {
                             if(response.responseJSON.hasOwnProperty('errors')) {

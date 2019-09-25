@@ -1,17 +1,8 @@
-label {
+label, input, button {
     display: block;
     margin: 10px;
 }
-
-input {
-    display:block;
-    margin: 10px;
-}
-button {
-    display:block;
-    margin: 10px;
-}
-span {
+span, select{
     margin-left: 10px;
 }
 .error-messages{

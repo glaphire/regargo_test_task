@@ -6,12 +6,18 @@ namespace App\Http\Controllers;
 
 use App\Rules\CurrencyCode;
 use App\Rules\OgrnFormula;
-use App\Services\CbrCurrencyService;
+use App\Services\CurrencyServiceInterface;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
 
 class OgrnController extends Controller
 {
+    private $currencyService;
+
+    public function __construct(CurrencyServiceInterface $cbrCurrencyService)
+    {
+        $this->currencyService = $cbrCurrencyService;
+    }
+
     public function showValidationForm()
     {
         return view('ogrn.validation_form');
@@ -32,21 +38,22 @@ class OgrnController extends Controller
     {
         return view('ogrn.currency_form', [
             'ogrn_number' => $request->input('ogrn_number'),
+            'currency_codes' => $this->currencyService->getCurrencyCodes(),
         ]);
     }
 
-    public function getCurrencyByDate(Request $request, CbrCurrencyService $cbrService)
+    public function getCurrencyByDate(Request $request)
     {
         $currency = $request->get('currency');
         $date = $request->get('date');
 
         $request->validate([
-            'currency' => ['required', 'string', new CurrencyCode()],
+            'currency' => ['required', 'string', new CurrencyCode($this->currencyService)],
             'date' => ['required', 'string', 'date_format:d/m/Y']
             ]);
 
         try {
-            $currencyValue = $cbrService->getCurrencyValueByDate($currency, $date);
+            $currencyValue = $this->currencyService->getCurrencyValueByDate($currency, $date);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Unexpected response from third party server'], 500);
         }

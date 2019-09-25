@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 use http\Exception\UnexpectedValueException;
 use SimpleXMLElement;
 
-class CbrCurrencyService
+class CbrCurrencyService implements CurrencyServiceInterface
 {
     private $client;
 
@@ -17,6 +17,8 @@ class CbrCurrencyService
     static $currenciesIds =
     [
         'usd' => 'R01235',
+        'eur' => 'R01239',
+        'gpb' => 'R01035',
     ];
 
     public function __construct(Client $client)
@@ -24,13 +26,17 @@ class CbrCurrencyService
         $this->client = $client;
     }
 
+    public function getCurrencyCodes() {
+        return array_keys(self::$currenciesIds);
+    }
+
     /**
-     * @param string $currencyCipher
+     * @param string $currencyCode
      * @param string $date
      * @return string|null
      * @throws \Exception
      */
-    public function getCurrencyValueByDate(string $currencyCipher, string $date) {
+    public function getCurrencyValueByDate(string $currencyCode, string $date) {
         $response = $this->client->get(self::CBR_DAILY_CURRENCIES_URL, ['date_req' => $date]);
 
         if ($response->getStatusCode() !== 200
@@ -44,7 +50,7 @@ class CbrCurrencyService
 
         foreach ($currencies->children() as $currency) {
             $currencyId = (string)$currency->attributes()->{'ID'};
-            if ($currencyId == self::$currenciesIds[$currencyCipher]) {
+            if ($currencyId == self::$currenciesIds[$currencyCode]) {
                 $currencyValue = (string)$currency->{'Value'};
                 return $currencyValue;
             }
