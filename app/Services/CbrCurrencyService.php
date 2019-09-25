@@ -5,7 +5,6 @@ namespace App\Services;
 
 
 use GuzzleHttp\Client;
-use http\Exception\UnexpectedValueException;
 use SimpleXMLElement;
 
 class CbrCurrencyService implements CurrencyServiceInterface
@@ -15,18 +14,19 @@ class CbrCurrencyService implements CurrencyServiceInterface
     const CBR_DAILY_CURRENCIES_URL = 'http://www.cbr.ru/scripts/XML_daily.asp';
 
     static $currenciesIds =
-    [
-        'usd' => 'R01235',
-        'eur' => 'R01239',
-        'gpb' => 'R01035',
-    ];
+        [
+            'usd' => 'R01235',
+            'eur' => 'R01239',
+            'gpb' => 'R01035',
+        ];
 
     public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
-    public function getCurrencyCodes() {
+    public function getCurrencyCodes()
+    {
         return array_keys(self::$currenciesIds);
     }
 
@@ -36,7 +36,8 @@ class CbrCurrencyService implements CurrencyServiceInterface
      * @return string|null
      * @throws \Exception
      */
-    public function getCurrencyValueByDate(string $currencyCode, string $date) {
+    public function getCurrencyValueByDate(string $currencyCode, string $date)
+    {
         $response = $this->client->get(self::CBR_DAILY_CURRENCIES_URL, ['date_req' => $date]);
 
         if ($response->getStatusCode() !== 200

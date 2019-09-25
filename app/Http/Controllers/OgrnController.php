@@ -50,7 +50,7 @@ class OgrnController extends Controller
         $request->validate([
             'currency' => ['required', 'string', new CurrencyCode($this->currencyService)],
             'date' => ['required', 'string', 'date_format:d/m/Y']
-            ]);
+        ]);
 
         try {
             $currencyValue = $this->currencyService->getCurrencyValueByDate($currency, $date);
