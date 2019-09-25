@@ -32,6 +32,7 @@
                 {
                     $('.response-status').html("&#10004; корректен").text();
                     $('#search').prop('disabled', false);
+                    $('.error-messages').html('');
                     return true;
                 },
                 error: function (response) {
