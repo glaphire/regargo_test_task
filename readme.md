@@ -24,5 +24,5 @@ composer install
 cp .env.example .env
 php artisan key:generate
 cd public
-php -S localhost:5000
+php -S localhost:5000 -t public
 ```
