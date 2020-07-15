@@ -9,9 +9,9 @@ class CbrCurrencyService implements CurrencyServiceInterface
 {
     private $client;
 
-    const CBR_DAILY_CURRENCIES_URL = 'http://www.cbr.ru/scripts/XML_daily.asp';
+    private const CBR_DAILY_CURRENCIES_URL = 'http://www.cbr.ru/scripts/XML_daily.asp';
 
-    public static $currenciesIds =
+    private static $currenciesIds =
         [
             'usd' => 'R01235',
             'eur' => 'R01239',
