@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use App\Services\CurrencyServiceInterface;
 use Illuminate\Contracts\Validation\Rule;
+use App\Services\CurrencyServiceInterface;
 
 class CurrencyCode implements Rule
 {
@@ -22,8 +22,9 @@ class CurrencyCode implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)

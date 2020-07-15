@@ -1,13 +1,11 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
-
-use App\Rules\CurrencyCode;
 use App\Rules\OgrnFormula;
-use App\Services\CurrencyServiceInterface;
+use App\Rules\CurrencyCode;
 use Illuminate\Http\Request;
+use App\Services\CurrencyServiceInterface;
 
 class OgrnController extends Controller
 {
@@ -27,8 +25,8 @@ class OgrnController extends Controller
     {
         $request->validate([
             'ogrn_number' => [
-                'required', 'numeric', 'digits:13', new OgrnFormula()
-            ]
+                'required', 'numeric', 'digits:13', new OgrnFormula(),
+            ],
         ]);
 
         return response()->json(['is_correct' => true]);
@@ -49,7 +47,7 @@ class OgrnController extends Controller
 
         $request->validate([
             'currency' => ['required', 'string', new CurrencyCode($this->currencyService)],
-            'date' => ['required', 'string', 'date_format:d/m/Y']
+            'date' => ['required', 'string', 'date_format:d/m/Y'],
         ]);
 
         try {
@@ -60,8 +58,8 @@ class OgrnController extends Controller
 
         if ($currencyValue) {
             return response()->json(['currency' => $currencyValue]);
-        } else {
-            return response()->json(['error' => 'Couldn\'t get currency value'], 500);
         }
+
+        return response()->json(['error' => 'Couldn\'t get currency value'], 500);
     }
 }
