@@ -45,6 +45,8 @@ class OgrnFormula implements Rule
      *
      * @param string $ogrn
      * @link https://github.com/Kholenkov/php-data-validation/blob/master/src/DataValidation.php#L160
+     *
+     * @return bool
      */
     private function validateLastNumber(string $ogrn) {
 
