@@ -56,10 +56,10 @@ class OgrnController extends Controller
             return response()->json(['error' => 'Unexpected response from third party server'], 500);
         }
 
-        if ($currencyValue) {
-            return response()->json(['currency' => $currencyValue]);
+        if (!$currencyValue) {
+            return response()->json(['error' => 'Couldn\'t get currency value'], 500);
         }
 
-        return response()->json(['error' => 'Couldn\'t get currency value'], 500);
+        return response()->json(['currency' => $currencyValue]);
     }
 }
